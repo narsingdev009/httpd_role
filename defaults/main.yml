@@ -1,0 +1,4 @@
+---
+pkg: httpd
+svc: httpd
+rule: http

@@ -1,0 +1,31 @@
+---
+  - name: installing {{ pkg }} package
+    ansible.builtin.dnf:
+      name: "{{ pkg }}"
+      state: present
+  
+  - name: start and enable {{ svc }} service
+    ansible.builtin.service:
+      name: "{{ svc }}"
+      state: started
+      enabled: true
+
+  - name: opening {{ rule }} service in the firewall
+    ansible.posix.firewalld:
+      service: "{{ rule }}"
+      state: enabled
+      permanent: true
+      immediate: true
+
+  - name: creating sample webpage
+    ansible.builtin.template:
+      src: index.j2
+      dest: /var/www/html/index.html
+
+  - name: copying hello.txt file
+    ansible.builtin.copy:
+      src: hello.txt
+      dest: /mnt/hello.txt
+    notify:
+      - restart httpd service
+

@@ -1,0 +1,5 @@
+---
+  - name: restart httpd service
+    ansible.builtin.service:
+      name: "{{ svc }}"
+      state: restarted
